@@ -19,7 +19,7 @@ import rclpy
 from rclpy.node import Node
 import serial
 from erp42_interfaces_pkg.msg import ErpStatusMsg, ErpCmdMsg
-from ByteHandler import ErpMsg2Packet, Packet2ErpMsg
+from .ByteHandler import ErpMsg2Packet, Packet2ErpMsg
 
 
 START_BITS = "535458"  # 'STX' in hex

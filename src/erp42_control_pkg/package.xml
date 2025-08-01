@@ -7,13 +7,14 @@
   <maintainer email="ky942400@gmail.com">moonshot</maintainer>
   <license>MIT</license>
 
+  <!-- Build tool dependency -->
   <buildtool_depend>ament_python</buildtool_depend>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>serial</exec_depend>
   <exec_depend>erp42_interfaces_pkg</exec_depend>
 
-  <!-- 테스트 도구 의존성 (현재 비활성화됨)
+  <!-- 테스트 도구 의존성 비활성화.
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>

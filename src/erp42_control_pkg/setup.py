@@ -1,22 +1,25 @@
-from setuptools import find_packages, setup
+from setuptools import setup, find_packages
+from glob import glob
 
 package_name = 'erp42_control_pkg'
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=find_packages(exclude=['test']),
+    packages=find_packages(include=[package_name, f'{package_name}.*']),
+    package_dir={'': '.'},
     data_files=[
         ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
+            [f'resource/{package_name}']),
+        (f'share/{package_name}', ['package.xml']),
+        (f'share/{package_name}/launch', glob('launch/*.launch.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='moonshot',
     maintainer_email='ky942400@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='ERP42 control node with serial interface',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
