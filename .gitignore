@@ -1,6 +1,10 @@
-./vscode
-./log
-./build
-./install.vscode/browse.vc.db
-.vscode/browse.vc.db-shm
-.vscode/browse.vc.db-wal
+# VSCode 설정 파일 전체 무시
+.vscode/
+
+# 로그 파일 디렉토리 전체 무시
+log/
+
+# ROS2 빌드/설치 디렉토리 무시
+build/
+install/
+log/
