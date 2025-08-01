@@ -20,7 +20,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ByteHandler_node = erp42_control_pkg.ByteHandler:main',
             'ErpSerialHandler_node = erp42_control_pkg.ErpSerialHandler:main',
         ],
     },
