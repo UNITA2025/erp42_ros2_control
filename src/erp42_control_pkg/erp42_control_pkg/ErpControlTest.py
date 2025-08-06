@@ -12,7 +12,7 @@ from erp42_interfaces_pkg.msg import ErpCmdMsg
 class SteeringTestNode(Node):
     def __init__(self):
         super().__init__('steering_test_node')
-        self.publisher = self.create_publisher(ErpCmdMsg, '/erp_cmd', 10)
+        self.publisher = self.create_publisher(ErpCmdMsg, '/erp42_ctrl_cmd', 10)
         self.timer_period = 1.0  # 1초마다 실행
         self.timer = self.create_timer(self.timer_period, self.publish_steer_command)
         self.step = 0
@@ -25,12 +25,11 @@ class SteeringTestNode(Node):
             msg.gear    = 1        # 전진 기어 고정
             msg.speed   = 0      # 속도 고정
             # 짝수 스텝엔 좌회전, 홀수 스텝엔 우회전
-            msg.steer   = -500 if self.step % 2 == 0 else 500
+            msg.steer   = -2000 if self.step % 2 == 0 else 2000
             msg.brake   = 0
         else:
             msg.e_stop = True      # 테스트 종료 시 비상정지
 
-        msg.alive = self.step % 256
         self.publisher.publish(msg)
         self.get_logger().info(
             f'[Step {self.step}] steer={msg.steer}, e_stop={msg.e_stop}'

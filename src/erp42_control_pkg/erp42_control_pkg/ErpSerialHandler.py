@@ -94,7 +94,7 @@ class ERPHandler(Node):
             # 파싱 시도
             try:
                 msg = Packet2ErpMsg(packet)
-                self.erpMotionMsg_pub.publish(msg)
+                self.status_pub.publish(msg)
             except Exception as inner_e:
                 self.get_logger().warn(f"Packet2ErpMsg Error: {inner_e} | raw: {hex_data}")
 
