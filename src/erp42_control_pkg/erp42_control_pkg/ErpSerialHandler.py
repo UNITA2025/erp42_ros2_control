@@ -81,15 +81,27 @@ class ERPHandler(Node):
         #------------------ 주기 타이머 ------------------#
         self.timer = self.create_timer(1.0 / 40.0, self.timer_callback)  # 40Hz loop
 
+    def recvPacket(self):
+        try:
+            packet = self.serial.read(18)
+            hex_data = packet.hex()
 
-    # 시리얼 수신 후 메시지 변환 및 퍼블리시
-    def recv_packet(self):
-        packet = self.serial.read(18)
-        if not packet.hex().startswith(START_BITS):
-            end, data = packet.hex().split(START_BITS)
-            packet = bytes.fromhex(START_BITS + data + end)
-        msg = Packet2ErpMsg(packet)
-        self.status_pub.publish(msg)
+            # START_BITS 검사
+            if not hex_data.startswith(START_BITS):
+                self.get_logger().warn(f"Invalid START_BITS: {hex_data}")
+                return
+
+            # 파싱 시도
+            try:
+                msg = Packet2ErpMsg(packet)
+                self.erpMotionMsg_pub.publish(msg)
+            except Exception as inner_e:
+                self.get_logger().warn(f"Packet2ErpMsg Error: {inner_e} | raw: {hex_data}")
+
+        except Exception as e:
+            self.get_logger().warn(f"recvPacket Error: {e}")
+
+
 
     # ROS 토픽 콜백: 차량 제어 명령 수신
     def send_packet_callback(self, msg: ErpCmdMsg):
@@ -119,7 +131,3 @@ def main(args=None):
         node.serial.close()
         node.destroy_node()
         rclpy.shutdown()
-
-
-if __name__ == "__main__":
-    main()
