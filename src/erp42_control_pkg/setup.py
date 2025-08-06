@@ -24,6 +24,8 @@ setup(
     entry_points={
         'console_scripts': [
             'ErpSerialHandler_node = erp42_control_pkg.ErpSerialHandler:main',
+            'ErpControlTest_node = erp42_control_pkg.ErpControlTest:main',
+
         ],
     },
 )
