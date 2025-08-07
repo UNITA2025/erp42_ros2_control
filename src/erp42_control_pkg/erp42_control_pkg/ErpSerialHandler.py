@@ -81,7 +81,7 @@ class ERPHandler(Node):
         #------------------ 주기 타이머 ------------------#
         self.timer = self.create_timer(1.0 / 40.0, self.timer_callback)  # 40Hz loop
 
-    def recvPacket(self):
+    def recv_packet(self):
         try:
             packet = self.serial.read(18)
             hex_data = packet.hex()
