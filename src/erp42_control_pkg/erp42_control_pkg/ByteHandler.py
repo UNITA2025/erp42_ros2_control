@@ -47,3 +47,9 @@ def ErpMsg2Packet(_msg: ErpCmdMsg, _alive: np.uint8) -> list:
     )
     packet = header + data + tail
     return packet
+
+def main():
+    print("ByteHandler started")
+
+if __name__ == "__main__":
+    main()

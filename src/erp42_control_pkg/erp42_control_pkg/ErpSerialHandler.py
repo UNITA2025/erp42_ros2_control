@@ -75,11 +75,11 @@ class ERPHandler(Node):
             ErpCmdMsg,
             SUB_ERP_CMD_TOPIC,
             self.send_packet_callback,
-            3
+            10
         )
 
         #------------------ 주기 타이머 ------------------#
-        self.timer = self.create_timer(1.0 / 40.0, self.timer_callback)  # 40Hz loop
+        self.create_timer(1.0 / 40.0, self.timer_callback)  # 40Hz loop
 
     def recv_packet(self):
         try:
@@ -109,9 +109,13 @@ class ERPHandler(Node):
 
     # 시리얼 전송 처리
     def serial_send(self):
-        packet = ErpMsg2Packet(self.packet, self.alive)
-        self.serial.write(packet)
-        self.alive = (self.alive + 1) % 256
+        try:
+            packet = ErpMsg2Packet(self.packet, self.alive)
+            self.serial.write(packet)
+            self.alive = (self.alive + 1) % 256
+        except Exception as e:
+            self.get_logger().warn(f"serialSend Error: {e}")
+
 
     # 주기 실행 함수
     def timer_callback(self):
@@ -131,3 +135,6 @@ def main(args=None):
         node.serial.close()
         node.destroy_node()
         rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
